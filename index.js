@@ -7,8 +7,6 @@ app.use(express.urlencoded({ extended: true }));
 
 app.get('/', function(req, res) {
     const projectPath = path.dirname(import.meta.url)
-    console.log(projectPath)
-
     let pagePath = path.join(projectPath, '/index.html')
     pagePath = pagePath.replace('file:/', '/')
     res.sendFile(pagePath)
@@ -17,8 +15,17 @@ app.get('/', function(req, res) {
 app.post('/register', function(req, res) {
     console.log('tentando registrar usuário')
     console.log(req.body)
-    req.params.name
-    res.send('')
+   // salve conteudo do body em arquivo.
+    setTimeout(() => {
+        res.redirect('/thanks')
+    }, 3000)
+})
+
+app.get('/thanks', (req, res) => {
+    const projectPath = path.dirname(import.meta.url)
+    let pagePath = path.join(projectPath, '/thanks.html')
+    pagePath = pagePath.replace('file:/', '/')
+    res.sendFile(pagePath)
 })
 
 app.listen(3000, '0.0.0.0',function() {
