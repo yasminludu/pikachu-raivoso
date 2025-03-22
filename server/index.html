@@ -1,8 +1,26 @@
-<html>
-    <head>
+<!DOCTYPE html>
+<html lang="pt-br">
 
-    </head>
-    <body>
-        <h1>Home</h1>
-    </body>
+<head>
+    <meta charset="UTF-8">
+    <title>Cadastro</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <main class="container">
+
+        <h1>Cadastro</h1>
+
+        <form class="input-box" action="/register" method="POST">
+            <input type="text" name="nomeCompleto" placeholder="Nome Completo"></input>
+            <input type="date" name="dataNascimento" placeholder="Data de Nascimento"></input>
+            <input type="number" name="cpf" placeholder="CPF"></input>
+            <input type="email" name="cadastroUsuario" placeholder="Email"></input>
+            <input type="password" name="cadastroSenha" placeholder="Senha"></input>
+            <button type="submit" class="cadastroUsuario">Cadastrar</button>
+        </form>
+    </main>
+</body>
+
 </html>
