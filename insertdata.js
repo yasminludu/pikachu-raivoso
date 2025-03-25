@@ -1,6 +1,9 @@
-const fs = require("fs");
+import { createRequire } from "module";
+const require = createRequire(import.meta.url);
+
+import fs from "fs";
 const{ parse } = require("csv-parse");
-const db = require("./db");
+import db from "./db";
 
 fs.createReadStream("./usuarios.csv")
  .pipe(parse({ delimiter: ",", from_line: 2 }))
