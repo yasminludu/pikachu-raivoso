@@ -1,7 +1,11 @@
+const express = require('express');
 const fs = require('fs');
+const path = require('path');
+const rcsv = require('csv-parse');
 const readline = require('readline');
+const caminhoDoArquivo = ('../src/usuarios.csv');
 
-function carregarUsuarios('../src/usuarios.csv') {
+function carregarUsuarios(caminhoDoArquivo) {
 	try {
 		const dados = fs.readFileSync('../src/usuarios.csv', 'utf8');
 		const linhas = dados.trim().split('\n');
@@ -22,6 +26,7 @@ function carregarUsuarios('../src/usuarios.csv') {
 
 function verificarLogin(email, senha, usuarios) {
 	if (usuarios[email] && usuarios[email] === senha) {
+        res.redirect('../votacao.html');
 		return true;
 	}
 	return false;
@@ -37,9 +42,11 @@ if (usuarios) {
 	});
 
 	rl.question('Digite seu e-mail: ', (email) => {
-		rl.question('Senha: ', (senha) => {
+		rl.question('Digite sua senha: ', (senha) => {
 			if (verificarLogin(email, senha, usuarios)) {
 				console.log('login efetuado com sucesso.', email);
+
+                
 			} else { 
 				console.log('Email e/ou senha incorreto(s).');
 			}
