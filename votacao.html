@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tela de Votação</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <script>
+        let projetos = [
+            { id: 1, titulo: "Projeto de Lei 01", descricao: "Descrição do Projeto 01" },
+            { id: 2, titulo: "Projeto de Lei 02", descricao: "Descrição do Projeto 02" },
+            { id: 3, titulo: "Projeto de Lei 03", descricao: "Descrição do Projeto 03" }
+        ];
+        let projetoAtual = 0;
+        let votos = [];
+
+        function exibirProjeto() {
+            if (projetoAtual < projetos.length) {
+                const projeto = projetos[projetoAtual];
+                document.getElementById('titulo-projeto').textContent = projeto.titulo;
+                document.getElementById('descricao-projeto').textContent = projeto.descricao;
+            } else {
+                alert('Todos os projetos foram votados!');
+                localStorage.setItem('votos', JSON.stringify(votos));
+                window.location.href = 'telão.html';
+            }
+        }
+
+        function votar(opcao) {
+            const vereador = localStorage.getItem('vereador');
+            if (vereador) {
+                votos.push({ vereador, projeto: projetos[projetoAtual].titulo, voto: opcao });
+                projetoAtual++;
+                exibirProjeto();
+            } else {
+                alert('Erro: Usuário não autenticado!');
+                window.location.href = 'index.html';
+            }
+        }
+
+        window.onload = function() {
+            const vereador = localStorage.getItem('vereador');
+            document.getElementById('vereador-nome').textContent = vereador || 'Usuário desconhecido';
+            exibirProjeto();
+        }
+    </script>
+</head>
+<body class="flex flex-col items-center justify-center h-screen bg-gray-100">
+    <h1 class="text-3xl mb-6">Tela de Votação</h1>
+    <p class="mb-4 text-lg">Vereador logado: <span id="vereador-nome" class="font-bold"></span></p>
+    <div class="mb-4 p-4 bg-white shadow-md rounded-lg w-80">
+        <h2 id="titulo-projeto" class="text-2xl font-bold mb-2">Projeto de Lei</h2>
+        <p id="descricao-projeto" class="text-gray-700">Descrição do projeto de lei em votação.</p>
+    </div>
+    <div class="flex flex-col space-y-4 w-64">
+        <button onclick="votar('A favor')" class="bg-green-500 text-white p-4 rounded-lg hover:bg-green-600 w-full">A Favor</button>
+        <button onclick="votar('Contra')" class="bg-red-500 text-white p-4 rounded-lg hover:bg-red-600 w-full">Contra</button>
+        <button onclick="votar('Abstenção')" class="bg-blue-500 text-white p-4 rounded-lg hover:bg-blue-600 w-full">Abstenção</button>
+    </div>
+</body>
+</html>
